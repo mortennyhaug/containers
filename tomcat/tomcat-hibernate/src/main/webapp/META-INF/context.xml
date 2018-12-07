@@ -1,0 +1,14 @@
+<Context>
+	<!-- DataSource -->
+	<Resource name="jdbc/testDS"
+		auth="Container"
+		type="javax.sql.DataSource"
+		driverClassName="org.h2.Driver"
+		url="jdbc:h2:mem:test;DB_CLOSE_DELAY=-1"
+		username="sa"
+		password="sa"
+		maxActive="100" 
+		maxIdle="30" 
+		maxWait="10000"
+		closeMethod="close"/>
+</Context>

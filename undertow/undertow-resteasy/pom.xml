@@ -1,0 +1,108 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>no.nrk.undertow</groupId>
+		<artifactId>undertow</artifactId>
+		<version>1.0.0-SNAPSHOT</version>
+	</parent>
+
+	<artifactId>undertow-resteasy</artifactId>
+	<packaging>war</packaging>
+	<name>undertow-resteasy</name>
+	
+	<properties>
+		<!-- Dependency versions -->
+		<slf4j.version>1.7.7</slf4j.version>
+		<undertow.version>1.4.20.Final</undertow.version>
+		<resteasy.version>3.0.11.Final</resteasy.version>
+	</properties>
+	
+	<dependencyManagement>
+		<dependencies>
+			<!-- Slf4j logger API -->
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-api</artifactId>
+				<version>${slf4j.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-log4j12</artifactId>
+				<version>${slf4j.version}</version>
+			</dependency>
+			
+			<!-- Undertow -->
+			<dependency>
+			    <groupId>io.undertow</groupId>
+			    <artifactId>undertow-core</artifactId>
+			    <version>${undertow.version}</version>
+			</dependency>
+			<dependency>
+			    <groupId>io.undertow</groupId>
+			    <artifactId>undertow-servlet</artifactId>
+			    <version>${undertow.version}</version>
+			</dependency>
+
+			<!-- Resteasy -->
+			<dependency>
+				<groupId>org.jboss.resteasy</groupId>
+				<artifactId>resteasy-jaxrs</artifactId>
+				<version>${resteasy.version}</version>
+				<exclusions>
+					<exclusion>
+						<artifactId>slf4j-simple</artifactId>
+						<groupId>org.slf4j</groupId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+			<dependency>
+				<groupId>org.jboss.resteasy</groupId>
+				<artifactId>resteasy-jaxb-provider</artifactId>
+				<version>${resteasy.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.jboss.resteasy</groupId>
+				<artifactId>resteasy-jackson2-provider</artifactId>
+				<version>${resteasy.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.jboss.resteasy</groupId>
+				<artifactId>resteasy-undertow</artifactId>
+				<version>${resteasy.version}</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+	
+	<dependencies>
+		<dependency>
+			<groupId>io.undertow</groupId>
+			<artifactId>undertow-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.undertow</groupId>
+			<artifactId>undertow-servlet</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.jboss.resteasy</groupId>
+			<artifactId>resteasy-jaxrs</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.jboss.resteasy</groupId>
+			<artifactId>resteasy-jaxb-provider</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.jboss.resteasy</groupId>
+			<artifactId>resteasy-jackson2-provider</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.jboss.resteasy</groupId>
+			<artifactId>resteasy-undertow</artifactId>
+		</dependency>
+	</dependencies>
+</project>

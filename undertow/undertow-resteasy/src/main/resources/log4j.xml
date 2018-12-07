@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<log4j:configuration>
+	<appender name="default.console" class="org.apache.log4j.ConsoleAppender">
+	<!-- 
+        <param name="target" value="System.out" />
+        <param name="threshold" value="trace" />
+         -->
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d{dd-MM-yyyy HH:mm:ss} %-5p [%c] (%t) %m%n" />
+        </layout>
+    </appender>
+    
+    <appender name="default.file" class="org.apache.log4j.FileAppender">
+        <param name="file" value="../logs/news.out" />
+        <param name="append" value="false" />
+        <param name="threshold" value="trace" />
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d{dd-MM-yyyy HH:mm:ss} %-5p [%c] (%t) %m%n" />
+        </layout>
+    </appender>
+    
+    <logger name="org.jboss.weld">
+    	<level value="warn"/>
+    </logger>
+    <logger name="org.jboss.resteasy">
+    	<level value="info"/>
+    </logger>
+    <logger name="org.hibernate">
+    	<level value="warn"/>
+    </logger>
+    <logger name="org.springframework">
+    	<level value="warn"/>
+    </logger>
+    <logger name="org.apache">
+    	<level value="info"/>
+    </logger>
+    <logger name="org.reflections">
+    	<level value="info"/>
+    </logger>
+    <logger name="org.xnio">
+    	<level value="info"/>
+    </logger>
+    <logger name="io.swagger">
+    	<level value="info"/>
+    </logger>
+    
+    <root>
+        <priority value="trace" />
+        <appender-ref ref="default.console" />
+    </root>
+</log4j:configuration>

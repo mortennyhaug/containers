@@ -1,0 +1,153 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>no.nrk.jetty</groupId>
+		<artifactId>jetty</artifactId>
+		<version>1.0.0-SNAPSHOT</version>
+	</parent>
+
+	<artifactId>jetty-jersey</artifactId>
+	<packaging>war</packaging>
+	<name>jetty-jersey</name>
+	
+	<properties>
+		<!-- Dependency versions -->
+		<slf4j.version>1.7.7</slf4j.version>
+		<jetty-server.version>9.4.8.v20171121</jetty-server.version>
+		<jandex.version>2.0.5.Final</jandex.version>
+		<weld.version>3.0.3.Final</weld.version>
+		<jersey.version>2.26</jersey.version>
+	</properties>
+	
+	<dependencyManagement>
+		<dependencies>
+			<!-- Slf4j logger API -->
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-api</artifactId>
+				<version>${slf4j.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-log4j12</artifactId>
+				<version>${slf4j.version}</version>
+			</dependency>
+			
+			<!-- Jetty -->
+			<dependency>
+				<groupId>org.eclipse.jetty</groupId>
+				<artifactId>jetty-server</artifactId>
+				<version>${jetty-server.version}</version>
+			</dependency>
+			
+			<!-- Weld -->
+			<dependency>
+				<groupId>org.jboss.weld.servlet</groupId>
+				<artifactId>weld-servlet-core</artifactId>
+				<version>${weld.version}</version>
+			</dependency>
+			<dependency>
+			    <groupId>org.jboss</groupId>
+			    <artifactId>jandex</artifactId>
+			    <version>${jandex.version}</version>
+			</dependency>
+
+			<!-- Jersey -->
+			<dependency>
+			    <groupId>org.glassfish.jersey.containers</groupId>
+			    <artifactId>jersey-container-servlet</artifactId>
+			    <version>${jersey.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.glassfish.jersey.ext.cdi</groupId>
+				<artifactId>jersey-cdi1x</artifactId>
+				<version>${jersey.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.glassfish.jersey.ext.cdi</groupId>
+				<artifactId>jersey-cdi1x-servlet</artifactId>
+				<version>${jersey.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.glassfish.jersey.ext.cdi</groupId>
+				<artifactId>jersey-weld2-se</artifactId>
+				<version>${jersey.version}</version>
+			</dependency>
+			<dependency>
+			    <groupId>org.glassfish.jersey.inject</groupId>
+			    <artifactId>jersey-hk2</artifactId>
+			    <version>${jersey.version}</version>
+			</dependency>
+			
+			<!-- Jersey media -->
+			<dependency>
+				<groupId>org.glassfish.jersey.media</groupId>
+				<artifactId>jersey-media-moxy</artifactId>
+				<version>${jersey.version}</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+	
+	<dependencies>
+		<dependency>
+			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>jetty-server</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.jboss.weld.servlet</groupId>
+			<artifactId>weld-servlet-core</artifactId>
+		</dependency>
+		<dependency>
+		    <groupId>org.jboss</groupId>
+		    <artifactId>jandex</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.glassfish.jersey.containers</groupId>
+			<artifactId>jersey-container-servlet</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.glassfish.jersey.ext.cdi</groupId>
+			<artifactId>jersey-cdi1x</artifactId>
+		</dependency>
+		<dependency>
+		    <groupId>org.glassfish.jersey.ext.cdi</groupId>
+		    <artifactId>jersey-cdi1x-servlet</artifactId>
+		</dependency>
+		<dependency>
+		    <groupId>org.glassfish.jersey.inject</groupId>
+		    <artifactId>jersey-hk2</artifactId>
+		</dependency>
+		
+		<dependency>
+            <groupId>org.glassfish.jersey.media</groupId>
+            <artifactId>jersey-media-moxy</artifactId>
+        </dependency>
+	</dependencies>
+	
+	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.eclipse.jetty</groupId>
+					<artifactId>jetty-maven-plugin</artifactId>
+					<version>${jetty-maven-plugin.version}</version>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+		
+		<plugins>
+			<plugin>
+				<groupId>org.eclipse.jetty</groupId>
+				<artifactId>jetty-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>	
+</project>

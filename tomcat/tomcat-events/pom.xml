@@ -1,0 +1,167 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>no.nrk.tomcat</groupId>
+		<artifactId>tomcat</artifactId>
+		<version>1.0.0-SNAPSHOT</version>
+	</parent>
+
+	<artifactId>tomcat-events</artifactId>
+	<packaging>war</packaging>
+	<name>tomcat-events</name>
+	
+	<properties>
+		<!-- Dependency versions -->
+		<slf4j.version>1.7.25</slf4j.version>
+		<tomcat-servlet-api.version>9.0.6</tomcat-servlet-api.version>
+		<jandex.version>2.0.5.Final</jandex.version>
+		<weld.version>3.0.3.Final</weld.version>
+		<resteasy.version>3.5.0.Final</resteasy.version>
+		
+		<!-- Tomcat properties -->
+		<tomcat.server>localhost</tomcat.server>
+		<tomcat.manager-url>http://localhost:8080/manager/text</tomcat.manager-url>
+		<tomcat.context-path>/</tomcat.context-path>
+	</properties>
+	
+	<dependencyManagement>
+		<dependencies>
+			<!-- Slf4j logger API -->
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-api</artifactId>
+				<version>${slf4j.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-log4j12</artifactId>
+				<version>${slf4j.version}</version>
+			</dependency>
+			
+			<!-- Tomcat servlet API -->
+			<dependency>
+				<groupId>org.apache.tomcat</groupId>
+				<artifactId>tomcat-servlet-api</artifactId>
+				<version>${tomcat-servlet-api.version}</version>
+			</dependency>
+			
+			<!-- Weld -->
+			<dependency>
+				<groupId>org.jboss.weld.servlet</groupId>
+				<artifactId>weld-servlet-core</artifactId>
+				<version>${weld.version}</version>
+			</dependency>
+			<dependency>
+			    <groupId>org.jboss</groupId>
+			    <artifactId>jandex</artifactId>
+			    <version>${jandex.version}</version>
+			</dependency>
+
+			<!-- Resteasy -->
+			<dependency>
+				<groupId>org.jboss.resteasy</groupId>
+				<artifactId>resteasy-jaxrs</artifactId>
+				<version>${resteasy.version}</version>
+				<exclusions>
+					<exclusion>
+						<artifactId>slf4j-simple</artifactId>
+						<groupId>org.slf4j</groupId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+			<dependency>
+				<groupId>org.jboss.resteasy</groupId>
+				<artifactId>resteasy-jaxb-provider</artifactId>
+				<version>${resteasy.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.jboss.resteasy</groupId>
+				<artifactId>resteasy-client</artifactId>
+				<version>${resteasy.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.jboss.resteasy</groupId>
+				<artifactId>resteasy-jackson2-provider</artifactId>
+				<version>${resteasy.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.jboss.resteasy</groupId>
+				<artifactId>resteasy-cdi</artifactId>
+				<version>${resteasy.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.jboss.resteasy</groupId>
+				<artifactId>resteasy-servlet-initializer</artifactId>
+				<version>${resteasy.version}</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.apache.tomcat</groupId>
+			<artifactId>tomcat-servlet-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.jboss.weld.servlet</groupId>
+			<artifactId>weld-servlet-core</artifactId>
+		</dependency>
+		<dependency>
+		    <groupId>org.jboss</groupId>
+		    <artifactId>jandex</artifactId>
+		</dependency>
+				
+		<dependency>
+			<groupId>org.jboss.resteasy</groupId>
+			<artifactId>resteasy-jaxrs</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.jboss.resteasy</groupId>
+			<artifactId>resteasy-jaxb-provider</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.jboss.resteasy</groupId>
+			<artifactId>resteasy-jackson2-provider</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.jboss.resteasy</groupId>
+			<artifactId>resteasy-cdi</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.jboss.resteasy</groupId>
+			<artifactId>resteasy-servlet-initializer</artifactId>
+		</dependency>
+	</dependencies>
+	
+	<build>
+		<pluginManagement>
+			<plugins>
+				<!-- Deploys to Tomcat -->
+				<plugin>
+					<groupId>org.apache.tomcat.maven</groupId>
+					<artifactId>tomcat7-maven-plugin</artifactId>
+					<version>${tomcat-maven-plugin.version}</version>
+					<configuration>
+						<url>${tomcat.manager-url}</url>
+						<server>${tomcat.server}</server>
+						<path>${tomcat.context-path}</path>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+		
+		<plugins>
+			<plugin>
+				<groupId>org.apache.tomcat.maven</groupId>
+				<artifactId>tomcat7-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>	
+</project>

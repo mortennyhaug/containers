@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>no.nrk.jetty</groupId>
+	<artifactId>jetty</artifactId>
+	<packaging>pom</packaging>
+	<version>1.0.0-SNAPSHOT</version>
+
+	<name>jetty</name>
+
+	<modules>
+		<module>jetty-hibernate</module>
+		<module>jetty-jersey</module>
+		<module>jetty-jersey-jackson</module>
+		<module>jetty-resteasy</module>
+	</modules>
+
+	<properties>
+		<!-- Site properties -->
+		<site.deploy.url>scp://devtools/data/mavensite</site.deploy.url>
+
+		<!-- JDK version -->
+		<targetJdk>1.8</targetJdk>
+		
+		<!-- Encoding -->
+		<default.encoding>UTF-8</default.encoding>
+		<project.build.sourceEncoding>${default.encoding}</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>${default.encoding}</project.reporting.outputEncoding>
+		
+		<!-- Plugin versions -->
+		<maven-release-plugin.version>2.5.3</maven-release-plugin.version>
+		<maven-compiler-plugin.version>3.7.0</maven-compiler-plugin.version>
+		<maven-war-plugin.version>3.2.0</maven-war-plugin.version>
+		<maven-dependency-plugin.version>3.0.2</maven-dependency-plugin.version>
+		<maven-site-plugin.version>3.7</maven-site-plugin.version>
+		<maven-surefire-plugin.version>2.21.0</maven-surefire-plugin.version>
+		<!-- Version 9.4.7.v20170914 works, 9.4.8 fails with "WELD-000144: CDI API version mismatch." -->
+		<jetty-maven-plugin.version>9.4.7.v20170914</jetty-maven-plugin.version>
+		
+		<!-- Reporting -->
+		<maven-javadoc-plugin.version>3.0.0</maven-javadoc-plugin.version>
+		<maven-project-info-reports-plugin.version>2.9</maven-project-info-reports-plugin.version>
+	</properties>
+
+	<build>
+		<!-- Gives all jars and wars name of the artifactId without the version. 
+			Needed to deploy and undeploy wars of different versions Can be moved to 
+			wars since jars may need to keep their version -->
+		<finalName>${project.artifactId}</finalName>
+		<pluginManagement>
+			<plugins>
+				<!-- Use Java 1.8 compiler -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>${maven-compiler-plugin.version}</version>
+					<configuration>
+						<source>${targetJdk}</source>
+						<target>${targetJdk}</target>
+						<encoding>${project.build.sourceEncoding}</encoding>
+						<verbose>true</verbose>
+						<compilerVersion>${targetJdk}</compilerVersion>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-war-plugin</artifactId>
+					<version>${maven-war-plugin.version}</version>
+					<configuration>
+			            <failOnMissingWebXml>false</failOnMissingWebXml>
+			        </configuration>
+				</plugin>
+				<!-- Used by integration tests -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-surefire-plugin</artifactId>
+					<version>${maven-surefire-plugin.version}</version>
+					<!-- Used to separate integration tests from unit tests -->
+					<executions>
+						<execution>
+							<id>integration-test</id>
+							<phase>integration-test</phase>
+							<goals>
+								<goal>test</goal>
+							</goals>
+							<configuration>
+								<includes>
+									<include>**/*IT.java</include>
+								</includes>
+							</configuration>
+						</execution>
+					</executions>
+				</plugin>
+				<!-- Enables advanced dependency handling -->			
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-dependency-plugin</artifactId>
+					<version>${maven-dependency-plugin.version}</version>
+				</plugin>
+				<!-- Handles release management. -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-release-plugin</artifactId>
+					<version>${maven-release-plugin.version}</version>
+					<!--
+						Need to set preparation goal to install instead of verify so that modules of 
+						multi projects are installed in local repository and found when a release is made. 
+						If install is not defined as a goal, the release will fail, as module dependencies 
+						are not resolved. 
+					 -->
+					<configuration>
+						<preparationGoals>clean install -Dmaven.test.skip=true</preparationGoals>
+					</configuration>
+				</plugin>
+				<!-- Creates site and aggragates JavaDoc and similar. -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-site-plugin</artifactId>
+					<version>${maven-site-plugin.version}</version>
+					<configuration>
+						<skip>true</skip>
+						<skipDeploy>true</skipDeploy>
+						<locales>en</locales>
+						<inputEncoding>${default.encoding}</inputEncoding>
+						<outputEncoding>${default.encoding}</outputEncoding>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+		
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-release-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-site-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
+	
+	<reporting>
+		<plugins>
+			<!-- Create Javadoc -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>${maven-javadoc-plugin.version}</version>
+				<configuration>
+					<skip>true</skip>
+					<encoding>${project.reporting.outputEncoding}</encoding>
+					<quiet>true</quiet>
+					<links>
+						<link>http://docs.oracle.com/javase/8/docs/api/</link>
+						<link>https://docs.oracle.com/javaee/8/api/</link>
+					</links>
+				</configuration>
+			</plugin>
+			<!-- Generates site faster, maybe... -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-project-info-reports-plugin</artifactId>
+				<version>${maven-project-info-reports-plugin.version}</version>
+				<configuration>
+					<!-- Without this, it takes forever to generate site -->
+					<dependencyLocationsEnabled>false</dependencyLocationsEnabled>
+				</configuration>
+			</plugin>
+		</plugins>
+	</reporting>
+</project>
